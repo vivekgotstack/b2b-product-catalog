@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button";
 import { enquiryEmail, phoneHref, whatsappEnquiry, type EnquiryProduct } from "@/lib/contact";
 import type { Company } from "@/lib/catalogue-schema";
 
-export function EnquiryButton({ company, product, label, className, compact }: {
+export function EnquiryButton({ company, product, label, className, compact, variant }: {
   company: Company;
   product?: EnquiryProduct;
   label: string;
   className?: string;
   compact?: boolean;
+  variant?: "default" | "outline";
 }) {
   const email = enquiryEmail(company, product);
   const whatsapp = whatsappEnquiry(company, product);
@@ -18,7 +19,7 @@ export function EnquiryButton({ company, product, label, className, compact }: {
   const Icon = email ? Mail : !whatsapp && phone ? Phone : MessageCircle;
 
   return (
-    <Button asChild size={compact ? "sm" : "default"} className={className}>
+    <Button asChild size={compact ? "sm" : "default"} className={className} variant={variant}>
       <a
         href={href}
         target={external ? "_blank" : undefined}
