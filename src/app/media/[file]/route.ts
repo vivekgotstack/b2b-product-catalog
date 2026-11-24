@@ -12,6 +12,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ fil
     headers: {
       "Content-Type": contentType ?? "application/octet-stream",
       "Cache-Control": "public, max-age=31536000, immutable",
+      "Vercel-CDN-Cache-Control": "public, max-age=31536000, immutable",
       "X-Content-Type-Options": "nosniff",
     },
   });

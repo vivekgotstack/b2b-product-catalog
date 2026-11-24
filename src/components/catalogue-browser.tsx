@@ -23,14 +23,14 @@ export function CatalogueBrowser({ categories, entries }: { categories: Category
           <h2 id="catalogue-title">Product catalogue</h2>
         </div>
         <div role="search" aria-label="Product catalogue" className="catalogue-search">
-          <label htmlFor="product-search" className="sr-only">Search products, specifications or SKU</label>
+          <label htmlFor="product-search" className="sr-only">Search products and specifications</label>
           <Search size={19} aria-hidden="true" className="search-icon" />
           <Input
             id="product-search"
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search products or SKU"
+            placeholder="Search products"
             autoComplete="off"
             className="pr-10 pl-10"
           />

@@ -68,7 +68,6 @@ function ProductForm({ product, categories, change, remove, connected, onBusy }:
       </div>
       <div className="admin-fields-grid">
         <TextField label="Product name" value={product.name} setValue={(name) => change({ name })} />
-        <TextField label="SKU" value={product.sku} setValue={(sku) => change({ sku })} />
         <Field label="Category">
           <select value={product.category} onChange={(event) => change({ category: event.currentTarget.value })}>
             <option value="">Select a category</option>
@@ -148,7 +147,7 @@ export function CatalogueEditor({ initial, initialRevision, connected }: {
     setSelected(draft.products.length);
     setDraft((value) => ({
       ...value,
-      products: [...value.products, { slug, name: "New product", sku: slug.toUpperCase(), category: value.categories[0]?.slug ?? "", description: "", specifications: {}, images: [] }],
+      products: [...value.products, { slug, name: "New product", category: value.categories[0]?.slug ?? "", description: "", specifications: {}, images: [] }],
     }));
   }
 
@@ -213,7 +212,7 @@ export function CatalogueEditor({ initial, initialRevision, connected }: {
                     }}
                   >
                     <button type="button" className="admin-product-select" aria-pressed={selected === index} onClick={() => setSelected(index)}>
-                      <GripVertical size={16} aria-hidden="true" /><span><strong>{item.name || "New product"}</strong><small>{item.sku}</small></span>
+                      <GripVertical size={16} aria-hidden="true" /><span>{item.name || "New product"}</span>
                     </button>
                     <button type="button" className="admin-icon-button" aria-label={`Move ${item.name || "product"} earlier`} disabled={index === 0} onClick={() => reorderProduct(index, index - 1)}><ArrowUp size={15} aria-hidden="true" /></button>
                     <button type="button" className="admin-icon-button" aria-label={`Move ${item.name || "product"} later`} disabled={index === draft.products.length - 1} onClick={() => reorderProduct(index, index + 1)}><ArrowDown size={15} aria-hidden="true" /></button>

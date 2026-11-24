@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { BrandWordmark } from "@/components/brand-wordmark";
 import { EnquiryButton } from "@/components/enquiry-button";
@@ -23,9 +24,9 @@ export async function Header() {
         <div className="container-shell header-inner">
           <BrandWordmark />
           <nav className="main-nav" aria-label="Main navigation">
-            <a href="/#catalogue">Catalogue</a>
-            <a href="/#about">About</a>
-            <a href="/#contact">Contact</a>
+            <Link href="/#catalogue">Catalogue</Link>
+            <Link href="/#about">About</Link>
+            <Link href="/#contact">Contact</Link>
           </nav>
           <EnquiryButton company={company} label="Request a quote" className="header-quote" />
         </div>
@@ -46,9 +47,9 @@ export async function Footer() {
         <div className="footer-content">
           <div><BrandWordmark /></div>
           <nav aria-label="Footer navigation">
-            <a href="/#catalogue">Catalogue</a>
-            <a href="/#about">About</a>
-            <a href="/#contact">Contact</a>
+            <Link href="/#catalogue">Catalogue</Link>
+            <Link href="/#about">About</Link>
+            <Link href="/#contact">Contact</Link>
           </nav>
           {(phone || email || whatsapp) && (
             <div className="footer-actions">

@@ -23,7 +23,6 @@ export const products: readonly Product[] = [
   {
     slug: "ivory-pique-polo",
     name: "Ivory Piqué Polo",
-    sku: "SAMPLE-01",
     category: "polos",
     description: "A short-sleeved polo with a textured piqué knit, ribbed collar and two-button placket.",
     specifications: {
@@ -40,7 +39,6 @@ export const products: readonly Product[] = [
   {
     slug: "rust-pullover-hoodie",
     name: "Rust Pullover Hoodie",
-    sku: "SAMPLE-02",
     category: "sweatshirts",
     description: "A relaxed pullover hoodie with a drawstring hood, ribbed cuffs and a kangaroo pocket.",
     specifications: {
@@ -57,7 +55,6 @@ export const products: readonly Product[] = [
   {
     slug: "indigo-denim-jacket",
     name: "Indigo Denim Jacket",
-    sku: "SAMPLE-03",
     category: "outerwear",
     description: "A classic trucker jacket with contrast stitching, flap chest pockets and a button front.",
     specifications: {
@@ -74,7 +71,6 @@ export const products: readonly Product[] = [
   {
     slug: "crew-neck-t-shirts",
     name: "Crew Neck T-Shirts",
-    sku: "SAMPLE-04",
     category: "t-shirts",
     description: "Three crew-neck T-shirt styles for an everyday assortment, from a classic fit to a roomier cut.",
     specifications: {
@@ -91,7 +87,6 @@ export const products: readonly Product[] = [
   {
     slug: "olive-cargo-trousers",
     name: "Olive Cargo Trousers",
-    sku: "SAMPLE-05",
     category: "trousers",
     description: "Full-length utility trousers with patch cargo pockets for carrying essentials.",
     specifications: {
@@ -108,7 +103,6 @@ export const products: readonly Product[] = [
   {
     slug: "blue-oxford-shirt",
     name: "Blue Oxford Shirt",
-    sku: "SAMPLE-06",
     category: "shirts",
     description: "A long-sleeved button-down shirt with a chest pocket and a soft Oxford weave.",
     specifications: {
@@ -125,7 +119,6 @@ export const products: readonly Product[] = [
   {
     slug: "sage-crewneck-sweatshirt",
     name: "Sage Crewneck Sweatshirt",
-    sku: "SAMPLE-07",
     category: "sweatshirts",
     description: "A fleece sweatshirt with a ribbed crew neck, cuffs and hem.",
     specifications: {
@@ -142,7 +135,6 @@ export const products: readonly Product[] = [
   {
     slug: "sand-canvas-overshirt",
     name: "Sand Canvas Overshirt",
-    sku: "SAMPLE-08",
     category: "outerwear",
     description: "A canvas layering shirt with a button front and large front patch pockets.",
     specifications: {
@@ -159,7 +151,6 @@ export const products: readonly Product[] = [
   {
     slug: "stone-tapered-chinos",
     name: "Stone Tapered Chinos",
-    sku: "SAMPLE-09",
     category: "trousers",
     description: "A full-length flat-front chino with a tapered leg for everyday wear.",
     specifications: {
@@ -176,7 +167,6 @@ export const products: readonly Product[] = [
   {
     slug: "everyday-t-shirts",
     name: "Everyday T-Shirts",
-    sku: "SAMPLE-10",
     category: "t-shirts",
     description: "An assortment of long-sleeve, V-neck and pocket tees.",
     specifications: {

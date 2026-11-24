@@ -24,7 +24,7 @@ export function ContactSection({ company }: { company: Company }) {
           </div>
           {methods.length ? (
             <>
-              <p>For a bulk quote, share the product name or SKU, quantity, sizes and delivery location.</p>
+              <p>For a bulk quote, share the product name, quantity, sizes and delivery location.</p>
               <ul>
                 {methods.map(({ label, value, href, icon: Icon, external }) => (
                   <li key={label}>

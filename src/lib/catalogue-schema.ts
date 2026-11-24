@@ -10,7 +10,6 @@ const image = z.object({ src: imagePath, alt: z.string().trim().max(240) });
 const product = z.object({
   slug,
   name: label,
-  sku: label,
   category: slug,
   description: z.string().trim().min(1).max(4000),
   specifications: z.record(z.string().trim().min(1).max(120), z.string().trim().min(1).max(500)),
@@ -49,13 +48,10 @@ export const catalogueSchema = z.object({
     categorySlugs.add(item.slug);
   }
   const productSlugs = new Set<string>();
-  const skus = new Set<string>();
   for (const [index, item] of products.entries()) {
     if (!categorySlugs.has(item.category)) context.addIssue({ code: "custom", path: ["products", index, "category"], message: "Select an existing category." });
     if (productSlugs.has(item.slug)) context.addIssue({ code: "custom", path: ["products", index, "slug"], message: "Product URLs must be unique." });
-    if (skus.has(item.sku.toLowerCase())) context.addIssue({ code: "custom", path: ["products", index, "sku"], message: "Product SKUs must be unique." });
     productSlugs.add(item.slug);
-    skus.add(item.sku.toLowerCase());
   }
 });
 

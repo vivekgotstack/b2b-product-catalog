@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { productPath, siteUrl } from "@/lib/catalogue";
 import { readCatalogue } from "@/lib/catalogue-store";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const { data: { company, products } } = await readCatalogue();

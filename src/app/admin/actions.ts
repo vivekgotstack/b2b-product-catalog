@@ -2,10 +2,11 @@
 
 import { BlobPreconditionFailedError } from "@vercel/blob";
 import { randomUUID } from "node:crypto";
+import { revalidatePath, updateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { hasValidSession, sessionCookieName } from "@/lib/auth";
 import { catalogueSchema } from "@/lib/catalogue-schema";
-import { catalogueStorageConnected, storePhoto, writeCatalogue } from "@/lib/catalogue-store";
+import { catalogueCacheTag, catalogueStorageConnected, storePhoto, writeCatalogue } from "@/lib/catalogue-store";
 
 async function isAdmin() {
   return hasValidSession((await cookies()).get(sessionCookieName)?.value);
@@ -25,6 +26,11 @@ export async function publishCatalogue(draft: unknown, revision: string | null) 
 
   try {
     const version = await writeCatalogue(parsed.data, revision);
+    updateTag(catalogueCacheTag);
+    revalidatePath("/");
+    revalidatePath("/products/[slug]", "page");
+    revalidatePath("/sitemap.xml");
+    revalidatePath("/robots.txt");
     return { revision: version.etag, data: parsed.data };
   } catch (error) {
     if (error instanceof BlobPreconditionFailedError) return { error: "Someone published a newer version. Reload the editor before publishing." };

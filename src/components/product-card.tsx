@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { EnquiryButton } from "@/components/enquiry-button";
 import { ProductCardMedia } from "@/components/product-card-media";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,7 @@ export function ProductCard({ product, company, category }: { product: Product; 
       <ProductCardMedia href={path} name={name} images={images} />
       <div className="product-card-body">
         <p className="product-category">{category}</p>
-        <h3><a href={path}>{name}</a></h3>
+        <h3><Link href={path} prefetch={false}>{name}</Link></h3>
         {leadSpecs.length > 0 && (
           <dl className="product-card-specs">
             {leadSpecs.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
@@ -22,7 +23,7 @@ export function ProductCard({ product, company, category }: { product: Product; 
         )}
         <div className="product-card-actions">
           <Button asChild variant="outline" size="sm" className="grow">
-            <a href={path} aria-label={`View details for ${name}`}>Details</a>
+            <Link href={path} prefetch={false} aria-label={`View details for ${name}`}>Details</Link>
           </Button>
           <EnquiryButton company={company} product={product} label="Enquire" className="grow" compact />
         </div>

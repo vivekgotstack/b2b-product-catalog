@@ -40,4 +40,5 @@ For local testing, copy `.env.example` to `.env.local` and fill in the staff log
 - Edit products, categories, store details and homepage copy. Drag products to change their order, or use the move buttons.
 - Drop or paste product photos into the photo area. Drop or paste onto a photo to replace it. The first photo is the cover.
 - Select **Publish changes** to make the edits live. Public product URLs use the product slug. Changing a slug changes that product’s URL.
+- Publishing refreshes the cached storefront and product pages. The editor reads the latest saved revision directly.
 

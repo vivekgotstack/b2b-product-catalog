@@ -29,7 +29,6 @@ export default async function Home() {
             category: product.category,
             terms: [
               product.name,
-              product.sku,
               product.description,
               categoryNames.get(product.category),
               ...Object.entries(product.specifications).flat(),

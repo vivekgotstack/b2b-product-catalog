@@ -7,7 +7,7 @@ import { CatalogueEditor } from "@/components/admin/catalogue-editor";
 import { BrandWordmark } from "@/components/brand-wordmark";
 import { Button } from "@/components/ui/button";
 import { hasValidSession, sessionCookieName } from "@/lib/auth";
-import { catalogueStorageConnected, readCatalogue } from "@/lib/catalogue-store";
+import { catalogueStorageConnected, readCatalogueForEditing } from "@/lib/catalogue-store";
 import "./admin.css";
 
 export const metadata: Metadata = { title: "Catalogue editor", robots: { index: false, follow: false } };
@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
   if (!hasValidSession((await cookies()).get(sessionCookieName)?.value)) redirect("/login/");
-  const { data, revision } = await readCatalogue();
+  const { data, revision } = await readCatalogueForEditing();
 
   return (
     <>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronLeft, Mail, MessageCircle, Phone } from "lucide-react";
 import { ProductGallery } from "@/components/product-gallery";
@@ -10,6 +11,13 @@ import { readCatalogue } from "@/lib/catalogue-store";
 import { enquiryEmail, phoneHref, whatsappEnquiry } from "@/lib/contact";
 
 type Props = { params: Promise<{ slug: string }> };
+
+export const dynamic = "force-static";
+
+export async function generateStaticParams() {
+  const { data: { products } } = await readCatalogue();
+  return products.slice(0, 12).map(({ slug }) => ({ slug }));
+}
 
 async function readProduct(slug: string) {
   const { data: { company, categories, products } } = await readCatalogue();
@@ -46,14 +54,13 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <main id="main-content" className="container-shell product-page">
-      <a href="/#catalogue" className="back-link"><ChevronLeft size={18} aria-hidden="true" />Catalogue</a>
+      <Link href="/#catalogue" className="back-link"><ChevronLeft size={18} aria-hidden="true" />Catalogue</Link>
       {company.siteUrl && (
         <StructuredData data={{
           "@context": "https://schema.org",
           "@type": "Product",
           name: product.name,
           description: product.description,
-          sku: product.sku,
           category,
           url: absoluteUrl(productPath(product.slug), company.siteUrl),
           image: product.images.map(({ src }) => absoluteUrl(src, company.siteUrl)),
@@ -68,7 +75,6 @@ export default async function ProductPage({ params }: Props) {
         <div className="product-summary">
           <p className="product-category">{category}</p>
           <h1>{product.name}</h1>
-          <p className="sku">SKU {product.sku}</p>
           <p>{product.description}</p>
           <h2>Specifications</h2>
           <dl className="spec-table">

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { Product } from "@/data/products";
@@ -39,7 +40,7 @@ export function ProductCardMedia({ href, name, images }: {
   }
 
   if (images.length === 1) {
-    return <a href={href} tabIndex={-1} aria-hidden="true" className="product-card-image"><Image src={images[0].src} alt="" fill /></a>;
+    return <Link href={href} prefetch tabIndex={-1} aria-hidden="true" className="product-card-image"><Image src={images[0].src} alt="" fill /></Link>;
   }
 
   return (
@@ -64,7 +65,7 @@ export function ProductCardMedia({ href, name, images }: {
         browse(event.key === "ArrowLeft" ? -1 : 1);
       }}
     >
-      <a href={href} tabIndex={-1} aria-hidden="true" className="product-card-image">
+      <Link href={href} prefetch tabIndex={-1} aria-hidden="true" className="product-card-image">
         <Image src={images[0].src} alt="" fill />
         {showAlternates && images.slice(1).map(({ src }, position) => (
           <Image
@@ -78,7 +79,7 @@ export function ProductCardMedia({ href, name, images }: {
             onLoad={() => setLoaded((current) => new Set(current).add(src))}
           />
         ))}
-      </a>
+      </Link>
       <button type="button" className="card-photo-control card-photo-prev" aria-label={`Previous photo of ${name}`} onClick={() => browse(-1)}>
         <ChevronLeft size={20} aria-hidden="true" />
       </button>
