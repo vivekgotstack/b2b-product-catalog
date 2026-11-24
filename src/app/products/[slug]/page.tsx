@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ChevronLeft, Mail, MessageCircle, Phone } from "lucide-react";
 import { ProductGallery } from "@/components/product-gallery";
+import { EnquiryButton } from "@/components/enquiry-button";
 import { StructuredData } from "@/components/structured-data";
 import { Button } from "@/components/ui/button";
 import { catalogueTitle, company } from "@/config/company";
@@ -79,11 +80,16 @@ export default async function ProductPage({ params }: Props) {
               <div key={name}><dt>{name}</dt><dd>{value}</dd></div>
             ))}
           </dl>
-          <div className="product-contact">
-            {email && <Button asChild><a href={email}><Mail size={17} aria-hidden="true" />Email enquiry</a></Button>}
-            {phoneHref && <Button asChild variant="outline"><a href={phoneHref}><Phone size={17} aria-hidden="true" />Call sales</a></Button>}
-            {whatsapp && <Button asChild variant="whatsapp"><a href={whatsapp} target="_blank" rel="noopener noreferrer"><MessageCircle size={17} aria-hidden="true" />WhatsApp<span className="sr-only"> (opens in a new tab)</span></a></Button>}
-          </div>
+          <section className="product-contact" aria-labelledby="product-contact-title">
+            <h2 id="product-contact-title">Request a bulk quote</h2>
+            <p>Include your quantity, sizes and delivery location.</p>
+            <div className="product-contact-actions">
+              {email && <Button asChild><a href={email}><Mail size={17} aria-hidden="true" />Email enquiry</a></Button>}
+              {phoneHref && <Button asChild variant={email ? "outline" : "default"}><a href={phoneHref}><Phone size={17} aria-hidden="true" />Call sales</a></Button>}
+              {whatsapp && <Button asChild variant="whatsapp"><a href={whatsapp} target="_blank" rel="noopener noreferrer"><MessageCircle size={17} aria-hidden="true" />WhatsApp<span className="sr-only"> (opens in a new tab)</span></a></Button>}
+              {!email && !phoneHref && !whatsapp && <EnquiryButton product={product} label="Contact sales" />}
+            </div>
+          </section>
         </div>
       </div>
     </main>

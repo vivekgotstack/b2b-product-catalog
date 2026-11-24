@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { Layers3, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Layers3, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { EnquiryButton } from "@/components/enquiry-button";
 import { catalogueTitle, company } from "@/config/company";
 import { enquiryEmail, phoneHref, whatsappEnquiry } from "@/lib/contact";
 
@@ -38,9 +38,7 @@ export function Header() {
             <a href="/#about">About</a>
             <a href="/#contact">Contact</a>
           </nav>
-          <Button asChild className="header-quote">
-            <a href="/#contact"><Send size={16} aria-hidden="true" /><span>Request a quote</span></a>
-          </Button>
+          <EnquiryButton label="Request a quote" className="header-quote" />
         </div>
       </div>
     </header>

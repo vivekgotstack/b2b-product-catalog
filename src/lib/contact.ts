@@ -1,6 +1,6 @@
 import { catalogueTitle, company } from "@/config/company";
 
-type EnquiryProduct = { name: string; sku: string };
+export type EnquiryProduct = { name: string; sku: string };
 
 export const phoneHref = company.phone ? `tel:${company.phone.international}` : null;
 
@@ -8,7 +8,22 @@ export function enquiryEmail(product?: EnquiryProduct) {
   if (!company.email) return null;
 
   const subject = product ? `Enquiry for ${product.name} (${product.sku})` : "Bulk order enquiry";
-  return `mailto:${company.email}?subject=${encodeURIComponent(subject)}`;
+  const body = [
+    "Hello,",
+    "",
+    product
+      ? `I'd like a bulk quote for ${product.name} (${product.sku}).`
+      : "I'd like a quote for a bulk apparel order.",
+    "",
+    ...(!product ? ["Products or SKUs: "] : []),
+    "Quantity: ",
+    "Sizes and colours: ",
+    "Delivery location: ",
+    "",
+    "Thank you",
+  ].join("\r\n");
+
+  return `mailto:${company.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 export function whatsappEnquiry(product?: EnquiryProduct) {

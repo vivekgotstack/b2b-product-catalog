@@ -20,8 +20,7 @@ export function CatalogueBrowser({ categories, entries }: { categories: Category
     <>
       <div className="catalogue-heading">
         <div>
-          <h1 id="catalogue-title">Clothing catalogue</h1>
-          <p>Garment specifications and bulk order enquiries.</p>
+          <h2 id="catalogue-title">Product catalogue</h2>
         </div>
         <div role="search" aria-label="Product catalogue" className="catalogue-search">
           <label htmlFor="product-search" className="sr-only">Search products, specifications or SKU</label>
@@ -65,7 +64,7 @@ export function CatalogueBrowser({ categories, entries }: { categories: Category
       {matching.length === 0 && (
         <div className="empty-results">
           <span><PackageSearch size={28} strokeWidth={1.65} aria-hidden="true" /></span>
-          <h2>{entries.length ? "No matching products" : "No products listed yet"}</h2>
+          <h3>{entries.length ? "No matching products" : "No products listed yet"}</h3>
           <p>{entries.length ? "Try a different search term or category." : "Products will appear here once the catalogue is ready."}</p>
           {entries.length > 0 && (
             <button type="button" className="reset-filters" onClick={() => {

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CatalogueBrowser } from "@/components/catalogue-browser";
+import { CatalogueHero } from "@/components/catalogue-hero";
 import { ContactSection } from "@/components/contact-section";
 import { ProductCard } from "@/components/product-card";
 import { categories, categoryName, products } from "@/data/products";
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main id="main-content">
+      <CatalogueHero />
       <section className="catalogue-section container-shell" id="catalogue" aria-labelledby="catalogue-title">
         <CatalogueBrowser
           categories={categories.map((category) => ({

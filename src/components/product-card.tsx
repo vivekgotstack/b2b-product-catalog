@@ -1,15 +1,12 @@
-import { Mail, MessageCircle } from "lucide-react";
+import { EnquiryButton } from "@/components/enquiry-button";
 import { ProductCardMedia } from "@/components/product-card-media";
 import { Button } from "@/components/ui/button";
 import { categoryName, type Product } from "@/data/products";
 import { productPath } from "@/lib/catalogue";
-import { enquiryEmail, whatsappEnquiry } from "@/lib/contact";
 
 export function ProductCard({ product }: { product: Product }) {
   const { name, slug, category, specifications, images } = product;
   const path = productPath(slug);
-  const email = enquiryEmail(product);
-  const whatsapp = whatsappEnquiry(product);
   const leadSpecs = Object.entries(specifications).slice(0, 3);
 
   return (
@@ -25,19 +22,9 @@ export function ProductCard({ product }: { product: Product }) {
         )}
         <div className="product-card-actions">
           <Button asChild variant="outline" size="sm" className="grow">
-            <a href={path} aria-label={`View details for ${name}`}>View details</a>
+            <a href={path} aria-label={`View details for ${name}`}>Details</a>
           </Button>
-          {email ? (
-            <Button asChild size="sm" className="grow">
-              <a href={email} aria-label={`Email an enquiry about ${name}`}><Mail size={16} aria-hidden="true" />Enquire</a>
-            </Button>
-          ) : whatsapp && (
-            <Button asChild size="sm" className="grow">
-              <a href={whatsapp} target="_blank" rel="noopener noreferrer" aria-label={`Enquire about ${name} on WhatsApp (opens in a new tab)`}>
-                <MessageCircle size={16} aria-hidden="true" />Enquire
-              </a>
-            </Button>
-          )}
+          <EnquiryButton product={product} label="Enquire" className="grow" compact />
         </div>
       </div>
     </article>

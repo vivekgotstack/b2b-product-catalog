@@ -30,6 +30,6 @@ For local sign-in testing, copy `.env.example` to `.env.local` and fill in the l
 - Fill in `src/config/company.ts` for brand, domain, phone and WhatsApp. Set the enquiry inbox through `CATALOGUE_CONTACT_EMAIL`. Use an international phone number and a WhatsApp number with digits only, including the country code.
 - Replace the sample categories and products in `src/data/products.ts`. Use unique lowercase, hyphenated slugs and reference a category slug from each product. Each product needs a name, SKU, description, specification labels and values, and three or four images with descriptive alt text.
 - Store compressed product images under `public/images/products/<product-slug>/` and point each image at `/images/products/<product-slug>/...`. Prefer WebP or AVIF and size images for their display. The first image becomes the catalogue cover. Store your logo and social preview under `public/images/brand/`.
-- Every product gets a static URL at `/products/<product-slug>/`. Email enquiries open the visitor’s mail app with the product and SKU in the subject. Replies and follow-ups stay in your sales inbox.
+- Every product gets a static URL at `/products/<product-slug>/`. Email enquiries open the visitor’s mail app with the product and SKU in the subject and space for quantities, sizes and a delivery location. Replies and follow-ups stay in your sales inbox.
 - Product cards load alternate images on hover or when the visitor uses the photo controls. The arrows also work with touch and the keyboard.
 
