@@ -1,21 +1,9 @@
-import Image from "next/image";
-import { Layers3, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { LogOut, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { signOut } from "@/app/auth-actions";
+import { BrandWordmark } from "@/components/brand-wordmark";
 import { EnquiryButton } from "@/components/enquiry-button";
-import { catalogueTitle, company } from "@/config/company";
+import { company } from "@/config/company";
 import { enquiryEmail, phoneHref, whatsappEnquiry } from "@/lib/contact";
-
-function Wordmark() {
-  return (
-    <a className="wordmark" href="/" aria-label={`${catalogueTitle} home`}>
-      <span className="brand-mark" aria-hidden="true">
-        {company.logoPath
-          ? <Image src={company.logoPath} alt="" width={42} height={42} className="object-contain" />
-          : <Layers3 size={23} strokeWidth={1.65} />}
-      </span>
-      <span className="brand-name">{catalogueTitle}</span>
-    </a>
-  );
-}
 
 export function Header() {
   const email = enquiryEmail();
@@ -32,11 +20,14 @@ export function Header() {
       )}
       <div className="header-main">
         <div className="container-shell header-inner">
-          <Wordmark />
+          <BrandWordmark />
           <nav className="main-nav" aria-label="Main navigation">
             <a href="/#catalogue">Catalogue</a>
             <a href="/#about">About</a>
             <a href="/#contact">Contact</a>
+            <form action={signOut}>
+              <button type="submit" className="sign-out-button"><LogOut size={15} aria-hidden="true" />Sign out</button>
+            </form>
           </nav>
           <EnquiryButton label="Request a quote" className="header-quote" />
         </div>
@@ -53,7 +44,7 @@ export function Footer() {
     <footer className="site-footer">
       <div className="container-shell">
         <div className="footer-content">
-          <div><Wordmark /></div>
+          <div><BrandWordmark /></div>
           <nav aria-label="Footer navigation">
             <a href="/#catalogue">Catalogue</a>
             <a href="/#about">About</a>

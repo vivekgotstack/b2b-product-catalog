@@ -1,4 +1,4 @@
-# B2B Clothing Catalogue
+# Bulkout
 
 A statically generated Next.js catalogue for a single apparel brand. It includes ten sample listings and thirty local WebP photos to demonstrate the card slideshow.
 
@@ -19,11 +19,18 @@ Use the Next.js framework preset with the default output directory. Under **Sett
 | --- | --- |
 | `CATALOGUE_LOGIN_EMAIL` | The email used as the sign-in ID |
 | `CATALOGUE_PASSWORD` | A unique catalogue password stored as a secret |
+| `CATALOGUE_SESSION_SECRET` | A separate random signing key, at least 32 bytes, stored as a secret |
 | `CATALOGUE_CONTACT_EMAIL` | The inbox that receives enquiries. Leave blank to hide email actions. |
 
-Deploy again after changing any of these values. Visitors sign in through the browser prompt. The production site stays closed if either login setting is missing.
+Generate the signing key once and save it with the other login settings.
 
-For local sign-in testing, copy `.env.example` to `.env.local` and fill in the login settings. With both settings blank, `npm run dev` allows local browsing. Run `npm run build` followed by `npm start` to test the protected production build locally.
+```sh
+node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
+```
+
+Deploy again after changing these values. Visitors sign in at `/login/`. Selecting **Remember me on this device** keeps that browser signed in for 30 days. A regular sign-in uses a session cookie with a 12-hour maximum. Sign out clears the cookie for that browser. Changing the sign-in email, password or signing key ends existing sessions.
+
+For local testing, copy `.env.example` to `.env.local` and fill in the login settings before running `npm run dev`.
 
 ## Add your catalogue
 

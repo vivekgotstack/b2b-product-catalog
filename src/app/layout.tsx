@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "@fontsource-variable/archivo/wght.css";
 import "@fontsource-variable/inter/wght.css";
-import { Footer, Header } from "@/components/site-chrome";
-import { StructuredData } from "@/components/structured-data";
 import { catalogueDescription, catalogueTitle, company } from "@/config/company";
 import { absoluteUrl } from "@/lib/catalogue";
 import "./globals.css";
@@ -29,23 +27,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     <html lang="en-IN">
       <body>
         <a className="skip-link" href="#main-content">Skip to content</a>
-        {company.name && company.siteUrl && (
-          <StructuredData data={{
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "@id": absoluteUrl("/#organization"),
-            name: company.name,
-            url: absoluteUrl("/"),
-            logo: company.logoPath ? absoluteUrl(company.logoPath) : undefined,
-            description: catalogueDescription,
-            address: company.location ?? undefined,
-            email: company.email ?? undefined,
-            telephone: company.phone?.international,
-          }} />
-        )}
-        <Header />
         {children}
-        <Footer />
       </body>
     </html>
   );

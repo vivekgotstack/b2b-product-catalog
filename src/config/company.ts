@@ -12,7 +12,7 @@ type Company = {
 };
 
 export const company: Company = {
-  name: null,
+  name: "Bulkout",
   description: null,
   about: null,
   siteUrl: null,
@@ -24,6 +24,6 @@ export const company: Company = {
   email: process.env.CATALOGUE_CONTACT_EMAIL?.trim() || null,
 };
 
-export const catalogueTitle = company.name ?? "Apparel Catalogue";
+export const catalogueTitle = company.name ?? "Bulkout";
 export const catalogueDescription =
   company.description ?? "A clothing catalogue for bulk orders, quotations and product enquiries.";
