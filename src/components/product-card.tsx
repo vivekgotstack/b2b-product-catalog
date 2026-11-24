@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { Mail, MessageCircle } from "lucide-react";
+import { ProductCardMedia } from "@/components/product-card-media";
 import { Button } from "@/components/ui/button";
 import { categoryName, type Product } from "@/data/products";
 import { productPath } from "@/lib/catalogue";
@@ -14,9 +14,7 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <article className="product-card">
-      <a href={path} tabIndex={-1} aria-hidden="true" className="product-card-image">
-        <Image src={images[0].src} alt="" fill />
-      </a>
+      <ProductCardMedia href={path} name={name} images={images} />
       <div className="product-card-body">
         <p className="product-category">{categoryName(category)}</p>
         <h3><a href={path}>{name}</a></h3>

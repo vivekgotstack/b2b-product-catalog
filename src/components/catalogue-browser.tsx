@@ -79,7 +79,7 @@ export function CatalogueBrowser({ categories, entries }: { categories: Category
       <div className="product-grid">
         {entries.map(({ slug, card }) => <div key={slug} hidden={!visible.has(slug)}>{card}</div>)}
       </div>
-      <noscript><style>{`.catalogue-search, .category-filters { display: none !important; }`}</style></noscript>
+      <noscript><style>{`.catalogue-search, .category-filters, .card-photo-control, .card-photo-count { display: none !important; }`}</style></noscript>
     </>
   );
 }

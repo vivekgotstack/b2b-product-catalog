@@ -1,6 +1,6 @@
 # B2B Clothing Catalogue
 
-A static Next.js catalogue for a single apparel brand. The product list, categories, brand details and contact details start empty.
+A static Next.js catalogue for a single apparel brand. It includes ten sample listings and thirty local WebP photos to demonstrate the card slideshow. Brand and contact details start empty.
 
 ## Run and build
 
@@ -17,9 +17,10 @@ Upload `out/` to a static host that serves directory index files. Configure `404
 ## Add your catalogue
 
 - Fill in `src/config/company.ts`. Set the full HTTPS production URL and company name to enable indexing. Leave an unused contact method set to `null`. Use an international phone number and a WhatsApp number with digits only, including the country code.
-- Add categories and products in `src/data/products.ts`. Use unique lowercase, hyphenated slugs and reference a category slug from each product. Each product needs a name, SKU, description, specification labels and values, and three or four images with descriptive alt text.
+- Replace the sample categories and products in `src/data/products.ts`. Use unique lowercase, hyphenated slugs and reference a category slug from each product. Each product needs a name, SKU, description, specification labels and values, and three or four images with descriptive alt text.
 - Store compressed product images under `public/images/products/<product-slug>/` and point each image at `/images/products/<product-slug>/...`. Prefer WebP or AVIF and size images for their display. The first image becomes the catalogue cover. Store your logo and social preview under `public/images/brand/`.
 - Every product gets a static URL at `/products/<product-slug>/`. Email enquiries open the visitor’s mail app with the product and SKU in the subject. Replies and follow-ups stay in your sales inbox.
+- Product cards load alternate images on hover or when the visitor uses the photo controls. The arrows also work with touch and the keyboard.
 
 ## Optional password protection
 

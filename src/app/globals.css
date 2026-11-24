@@ -89,8 +89,59 @@ a { text-underline-offset: 3px; }
 
 .product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
 .product-card { display: flex; flex-direction: column; height: 100%; overflow: hidden; background: white; border: 1px solid var(--color-border); border-radius: 10px; }
-.product-card-image { display: block; position: relative; aspect-ratio: 1; background: #edf0ec; }
+.product-card-media { position: relative; isolation: isolate; }
+.product-card-image { display: block; position: relative; aspect-ratio: 1; overflow: hidden; background: #f2efea; }
 .product-card-image img { object-fit: contain; }
+.product-card-slide {
+  opacity: 0;
+  transform: translateX(2%);
+  transition: opacity .32s ease, transform .35s ease;
+}
+.product-card-slide[data-visible="true"] {
+  z-index: 1;
+  opacity: 1;
+  transform: translateX(0);
+}
+.card-photo-control {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  translate: 0 -50%;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #d9e2db;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--color-primary);
+  box-shadow: 0 2px 8px #17322920;
+  cursor: pointer;
+  transition: opacity .2s ease, background-color .2s ease, color .2s ease;
+}
+.card-photo-control:hover { background: var(--color-primary); color: white; }
+.card-photo-prev { left: .6rem; }
+.card-photo-next { right: .6rem; }
+.card-photo-count {
+  position: absolute;
+  z-index: 2;
+  right: .65rem;
+  bottom: .65rem;
+  padding: .2rem .52rem;
+  border-radius: 999px;
+  background: #173229;
+  color: white;
+  font-size: .75rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .product-card-media:not(:hover):not(:focus-within) .card-photo-control { opacity: 0; pointer-events: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .product-card-slide, .card-photo-control { transition: none; transform: none; }
+}
 .product-card-body { display: flex; flex: 1; flex-direction: column; gap: .4rem; padding: 1rem; }
 .product-category { color: var(--color-primary); font-size: .8125rem; font-weight: 650; }
 .product-card h3 { font-size: 1.12rem; font-weight: 710; line-height: 1.22; }
