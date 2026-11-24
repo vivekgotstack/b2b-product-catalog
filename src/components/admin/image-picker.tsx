@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowDown, ArrowUp, ImagePlus, Trash2 } from "lucide-react";
 import { useRef, useState } from "react";
 import { uploadCataloguePhoto } from "@/app/admin/actions";
@@ -89,7 +90,7 @@ export function ImagePicker({ label, images, limit, connected, onChange, onBusy,
   return (
     <section className="admin-photos" aria-label={label}>
       <h3>{label}</h3>
-      {limit > 1 && <p>The first photo is the cover. Add up to {limit} photos.</p>}
+      {limit > 1 && <p>The first photo is the cover. Add up to {limit}, or drop or paste onto a photo to replace it.</p>}
       <input ref={input} type="file" accept="image/*" multiple hidden onChange={(event) => {
         const files = Array.from(event.currentTarget.files ?? []);
         event.currentTarget.value = "";
@@ -98,10 +99,23 @@ export function ImagePicker({ label, images, limit, connected, onChange, onBusy,
       {images.length > 0 && (
         <ul className="admin-photo-list">
           {images.map((photo, index) => (
-            <li key={`${photo.src}-${index}`}>
-              {/* Images are already compressed and served at an immutable URL. */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={photo.src} alt={photo.alt || `Photo ${index + 1}`} width={100} height={100} />
+            <li
+              key={`${photo.src}-${index}`}
+              tabIndex={connected ? 0 : undefined}
+              onDragOver={(event) => { if (connected && event.dataTransfer.types.includes("Files")) event.preventDefault(); }}
+              onDrop={(event) => {
+                if (!connected) return;
+                event.preventDefault();
+                void addPictures(Array.from(event.dataTransfer.files), index);
+              }}
+              onPaste={(event) => {
+                const files = Array.from(event.clipboardData.files);
+                if (!connected || !files.length) return;
+                event.preventDefault();
+                void addPictures(files, index);
+              }}
+            >
+              <Image src={photo.src} alt={photo.alt || `Photo ${index + 1}`} width={100} height={100} />
               <div className="admin-photo-options">
                 {altText && (
                   <label className="admin-field">

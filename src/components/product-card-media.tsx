@@ -14,7 +14,7 @@ export function ProductCardMedia({ href, name, images }: {
   const [playing, setPlaying] = useState(false);
   const [showAlternates, setShowAlternates] = useState(false);
   const [loaded, setLoaded] = useState<ReadonlySet<string>>(() => new Set());
-  const visibleIndex = loaded.has(images[index].src) ? index : 0;
+  const visibleIndex = images[index] && loaded.has(images[index].src) ? index : 0;
 
   useEffect(() => {
     if (!playing) return;
@@ -36,6 +36,10 @@ export function ProductCardMedia({ href, name, images }: {
     setPlaying(false);
     setShowAlternates(true);
     setIndex((current) => (current + step + images.length) % images.length);
+  }
+
+  if (images.length === 1) {
+    return <a href={href} tabIndex={-1} aria-hidden="true" className="product-card-image"><Image src={images[0].src} alt="" fill /></a>;
   }
 
   return (
@@ -64,7 +68,7 @@ export function ProductCardMedia({ href, name, images }: {
         <Image src={images[0].src} alt="" fill />
         {showAlternates && images.slice(1).map(({ src }, position) => (
           <Image
-            key={src}
+            key={`${src}-${position}`}
             src={src}
             alt=""
             fill

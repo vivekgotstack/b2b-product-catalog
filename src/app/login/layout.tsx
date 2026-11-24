@@ -4,6 +4,7 @@ import { BrandWordmark } from "@/components/brand-wordmark";
 import "./sign-in.css";
 
 export const metadata: Metadata = { robots: { index: false, follow: false } };
+export const dynamic = "force-dynamic";
 
 export default function LoginLayout({ children }: { children: ReactNode }) {
   return (
