@@ -75,20 +75,3 @@ export function hasValidSession(token: string | undefined) {
     && timingSafeEqual(Buffer.from(providedSignature), Buffer.from(signature(payload, config)));
 }
 
-export function catalogueReturnPath(value: unknown) {
-  if (typeof value !== "string" || !value.startsWith("/") || value.startsWith("//")) return "/";
-
-  const origin = "https://bulkout.invalid";
-  if (!URL.canParse(value, origin)) return "/";
-  const target = new URL(value, origin);
-  if (target.origin !== origin || (target.pathname !== "/" && !target.pathname.startsWith("/products/"))) return "/";
-
-  return target.pathname + target.search;
-}
-
-export function loginPath(next: string, error?: "credentials" | "unavailable") {
-  const query = new URLSearchParams();
-  if (next !== "/") query.set("next", next);
-  if (error) query.set("error", error);
-  return query.size ? `/login/?${query}` : "/login/";
-}

@@ -1,18 +1,21 @@
 import { Mail, MessageCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { enquiryEmail, phoneHref, whatsappEnquiry, type EnquiryProduct } from "@/lib/contact";
+import type { Company } from "@/lib/catalogue-schema";
 
-export function EnquiryButton({ product, label, className, compact }: {
+export function EnquiryButton({ company, product, label, className, compact }: {
+  company: Company;
   product?: EnquiryProduct;
   label: string;
   className?: string;
   compact?: boolean;
 }) {
-  const email = enquiryEmail(product);
-  const whatsapp = whatsappEnquiry(product);
-  const href = email ?? whatsapp ?? phoneHref ?? "/#contact";
+  const email = enquiryEmail(company, product);
+  const whatsapp = whatsappEnquiry(company, product);
+  const phone = phoneHref(company);
+  const href = email ?? whatsapp ?? phone ?? "/#contact";
   const external = !email && Boolean(whatsapp);
-  const Icon = email ? Mail : !whatsapp && phoneHref ? Phone : MessageCircle;
+  const Icon = email ? Mail : !whatsapp && phone ? Phone : MessageCircle;
 
   return (
     <Button asChild size={compact ? "sm" : "default"} className={className}>

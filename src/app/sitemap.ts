@@ -1,15 +1,15 @@
 import type { MetadataRoute } from "next";
-import { company } from "@/config/company";
-import { products } from "@/data/products";
-import { productPath } from "@/lib/catalogue";
+import { productPath, siteUrl } from "@/lib/catalogue";
+import { readCatalogue } from "@/lib/catalogue-store";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const { siteUrl, name } = company;
-  if (!siteUrl || !name) return [];
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const { data: { company, products } } = await readCatalogue();
+  const base = siteUrl(company.siteUrl);
+  if (!base) return [];
 
   return ["/", ...products.map(({ slug }) => productPath(slug))].map((path) => ({
-    url: new URL(path, siteUrl).href,
+    url: new URL(path, base).href,
   }));
 }

@@ -5,25 +5,23 @@ import { ProductGallery } from "@/components/product-gallery";
 import { EnquiryButton } from "@/components/enquiry-button";
 import { StructuredData } from "@/components/structured-data";
 import { Button } from "@/components/ui/button";
-import { catalogueTitle, company } from "@/config/company";
-import { categoryName, getProduct, products } from "@/data/products";
 import { absoluteUrl, productPath } from "@/lib/catalogue";
+import { readCatalogue } from "@/lib/catalogue-store";
 import { enquiryEmail, phoneHref, whatsappEnquiry } from "@/lib/contact";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return products.map(({ slug }) => ({ slug }));
+async function readProduct(slug: string) {
+  const { data: { company, categories, products } } = await readCatalogue();
+  const product = products.find((item) => item.slug === slug);
+  if (!product) notFound();
+  return { company, product, category: categories.find((item) => item.slug === product.category)?.name ?? product.category };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const product = getProduct((await params).slug);
-  if (!product) notFound();
-
-  const url = absoluteUrl(productPath(product.slug));
-  const image = absoluteUrl(product.images[0].src);
+  const { company, product } = await readProduct((await params).slug);
+  const url = absoluteUrl(productPath(product.slug), company.siteUrl);
+  const image = absoluteUrl(product.images[0].src, company.siteUrl);
 
   return {
     title: product.name,
@@ -33,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "website",
       title: product.name,
       description: product.description,
-      siteName: catalogueTitle,
+      siteName: company.name,
       url,
       images: image ? [{ url: image, alt: product.images[0].alt }] : undefined,
     },
@@ -41,12 +39,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProductPage({ params }: Props) {
-  const product = getProduct((await params).slug);
-  if (!product) notFound();
-
-  const category = categoryName(product.category);
-  const email = enquiryEmail(product);
-  const whatsapp = whatsappEnquiry(product);
+  const { company, product, category } = await readProduct((await params).slug);
+  const email = enquiryEmail(company, product);
+  const whatsapp = whatsappEnquiry(company, product);
+  const phone = phoneHref(company);
 
   return (
     <main id="main-content" className="container-shell product-page">
@@ -59,8 +55,8 @@ export default async function ProductPage({ params }: Props) {
           description: product.description,
           sku: product.sku,
           category,
-          url: absoluteUrl(productPath(product.slug)),
-          image: product.images.map(({ src }) => absoluteUrl(src)),
+          url: absoluteUrl(productPath(product.slug), company.siteUrl),
+          image: product.images.map(({ src }) => absoluteUrl(src, company.siteUrl)),
           brand: company.name ? { "@type": "Brand", name: company.name } : undefined,
           additionalProperty: Object.entries(product.specifications).map(([name, value]) => ({
             "@type": "PropertyValue", name, value,
@@ -85,9 +81,9 @@ export default async function ProductPage({ params }: Props) {
             <p>Include your quantity, sizes and delivery location.</p>
             <div className="product-contact-actions">
               {email && <Button asChild><a href={email}><Mail size={17} aria-hidden="true" />Email enquiry</a></Button>}
-              {phoneHref && <Button asChild variant={email ? "outline" : "default"}><a href={phoneHref}><Phone size={17} aria-hidden="true" />Call sales</a></Button>}
+              {phone && <Button asChild variant={email ? "outline" : "default"}><a href={phone}><Phone size={17} aria-hidden="true" />Call sales</a></Button>}
               {whatsapp && <Button asChild variant="whatsapp"><a href={whatsapp} target="_blank" rel="noopener noreferrer"><MessageCircle size={17} aria-hidden="true" />WhatsApp<span className="sr-only"> (opens in a new tab)</span></a></Button>}
-              {!email && !phoneHref && !whatsapp && <EnquiryButton product={product} label="Contact sales" />}
+              {!email && !phone && !whatsapp && <EnquiryButton company={company} product={product} label="Contact sales" />}
             </div>
           </section>
         </div>

@@ -3,17 +3,21 @@ import { CatalogueBrowser } from "@/components/catalogue-browser";
 import { CatalogueHero } from "@/components/catalogue-hero";
 import { ContactSection } from "@/components/contact-section";
 import { ProductCard } from "@/components/product-card";
-import { categories, categoryName, products } from "@/data/products";
 import { absoluteUrl } from "@/lib/catalogue";
+import { readCatalogue } from "@/lib/catalogue-store";
 
-export const metadata: Metadata = {
-  alternates: { canonical: absoluteUrl("/") },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { data: { company } } = await readCatalogue();
+  return { alternates: { canonical: absoluteUrl("/", company.siteUrl) } };
+}
 
-export default function Home() {
+export default async function Home() {
+  const { data: { company, banner, categories, products } } = await readCatalogue();
+  const categoryNames = new Map(categories.map(({ slug, name }) => [slug, name]));
+
   return (
     <main id="main-content">
-      <CatalogueHero />
+      <CatalogueHero banner={banner} products={products} />
       <section className="catalogue-section container-shell" id="catalogue" aria-labelledby="catalogue-title">
         <CatalogueBrowser
           categories={categories.map((category) => ({
@@ -27,14 +31,14 @@ export default function Home() {
               product.name,
               product.sku,
               product.description,
-              categoryName(product.category),
+              categoryNames.get(product.category),
               ...Object.entries(product.specifications).flat(),
             ].join(" ").toLowerCase(),
-            card: <ProductCard product={product} />,
+            card: <ProductCard product={product} company={company} category={categoryNames.get(product.category) ?? product.category} />,
           }))}
         />
       </section>
-      <ContactSection />
+      <ContactSection company={company} />
     </main>
   );
 }

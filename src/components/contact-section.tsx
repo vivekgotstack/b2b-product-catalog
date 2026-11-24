@@ -1,12 +1,12 @@
 import { Mail, MapPin, MessageCircle, Phone, MessagesSquare } from "lucide-react";
-import { company } from "@/config/company";
+import type { Company } from "@/lib/catalogue-schema";
 import { enquiryEmail, phoneHref, whatsappEnquiry } from "@/lib/contact";
 
-export function ContactSection() {
+export function ContactSection({ company }: { company: Company }) {
   const methods = [
-    { label: "Email sales", value: company.email, href: enquiryEmail(), icon: Mail },
-    { label: "Call sales", value: company.phone?.display, href: phoneHref, icon: Phone },
-    { label: "WhatsApp", value: "Start an enquiry", href: whatsappEnquiry(), icon: MessageCircle, external: true },
+    { label: "Email sales", value: company.email, href: enquiryEmail(company), icon: Mail },
+    { label: "Call sales", value: company.phone?.display, href: phoneHref(company), icon: Phone },
+    { label: "WhatsApp", value: "Start an enquiry", href: whatsappEnquiry(company), icon: MessageCircle, external: true },
   ].filter((method) => method.href);
 
   return (

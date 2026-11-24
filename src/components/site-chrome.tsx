@@ -1,12 +1,13 @@
-import { LogOut, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
-import { signOut } from "@/app/auth-actions";
+import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { BrandWordmark } from "@/components/brand-wordmark";
 import { EnquiryButton } from "@/components/enquiry-button";
-import { company } from "@/config/company";
+import { StaffEntrance } from "@/components/staff-entrance";
+import { readCatalogue } from "@/lib/catalogue-store";
 import { enquiryEmail, phoneHref, whatsappEnquiry } from "@/lib/contact";
 
-export function Header() {
-  const email = enquiryEmail();
+export async function Header() {
+  const { data: { company } } = await readCatalogue();
+  const email = enquiryEmail(company);
 
   return (
     <header>
@@ -25,20 +26,19 @@ export function Header() {
             <a href="/#catalogue">Catalogue</a>
             <a href="/#about">About</a>
             <a href="/#contact">Contact</a>
-            <form action={signOut}>
-              <button type="submit" className="sign-out-button"><LogOut size={15} aria-hidden="true" />Sign out</button>
-            </form>
           </nav>
-          <EnquiryButton label="Request a quote" className="header-quote" />
+          <EnquiryButton company={company} label="Request a quote" className="header-quote" />
         </div>
       </div>
     </header>
   );
 }
 
-export function Footer() {
-  const email = enquiryEmail();
-  const whatsapp = whatsappEnquiry();
+export async function Footer() {
+  const { data: { company } } = await readCatalogue();
+  const email = enquiryEmail(company);
+  const whatsapp = whatsappEnquiry(company);
+  const phone = phoneHref(company);
 
   return (
     <footer className="site-footer">
@@ -50,15 +50,15 @@ export function Footer() {
             <a href="/#about">About</a>
             <a href="/#contact">Contact</a>
           </nav>
-          {(phoneHref || email || whatsapp) && (
+          {(phone || email || whatsapp) && (
             <div className="footer-actions">
-              {phoneHref && <a href={phoneHref} aria-label="Call sales"><Phone size={19} aria-hidden="true" /></a>}
+              {phone && <a href={phone} aria-label="Call sales"><Phone size={19} aria-hidden="true" /></a>}
               {email && <a href={email} aria-label="Email sales"><Mail size={19} aria-hidden="true" /></a>}
               {whatsapp && <a href={whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Enquire on WhatsApp (opens in a new tab)"><MessageCircle size={19} aria-hidden="true" /></a>}
             </div>
           )}
         </div>
-        {company.name && <p className="footer-note">© {new Date().getUTCFullYear()} {company.name}</p>}
+        <div className="footer-note"><span>© {new Date().getUTCFullYear()} {company.name}</span><StaffEntrance /></div>
       </div>
     </footer>
   );
