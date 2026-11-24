@@ -19,7 +19,7 @@ export function CatalogueHero() {
         <div className="hero-photos" aria-hidden="true">
           {covers.map(({ src }) => (
             <div className="hero-photo" key={src}>
-              <Image src={src} alt="" fill />
+              <Image src={src} alt="" fill loading="eager" />
             </div>
           ))}
         </div>
