@@ -1,6 +1,6 @@
 import { createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 
-export const sessionCookieName = "bulkout_session";
+export const sessionCookieName = "bulkout_admin_session";
 export const rememberedSessionDays = 30;
 
 const rememberedSeconds = rememberedSessionDays * 24 * 60 * 60;
@@ -34,7 +34,7 @@ export function credentialsMatch(email: string, password: string, config: AuthCo
 
 function signature(payload: string, config: AuthConfiguration) {
   return createHmac("sha256", config.secret)
-    .update(JSON.stringify(["bulkout-v1", config.email, config.password, payload]))
+    .update(JSON.stringify(["bulkout-admin-v1", config.email, config.password, payload]))
     .digest("base64url");
 }
 

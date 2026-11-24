@@ -262,7 +262,7 @@ export function CatalogueEditor({ initial, initialRevision, connected }: {
       </fieldset>
       <div className="admin-publish-bar">
         <p role="status" className={message?.error ? "admin-save-error" : undefined}>
-          {message?.text ?? (uploading ? "Uploading photos…" : dirty ? "You have unpublished changes." : "No unpublished changes.")}
+          {message && (message.error || !dirty) ? message.text : uploading ? "Uploading photos…" : dirty ? "You have unpublished changes." : "No unpublished changes."}
         </p>
         <Button type="button" onClick={() => void publish()} disabled={!connected || !dirty || busy}>
           <Check size={17} aria-hidden="true" />{publishing ? "Publishing…" : "Publish changes"}
