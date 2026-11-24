@@ -14,8 +14,7 @@ type Props = { params: Promise<{ slug: string }> };
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  // Next.js static export requires a parameter even when the catalogue is empty.
-  return products.length ? products.map(({ slug }) => ({ slug })) : [{ slug: "__empty__" }];
+  return products.map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

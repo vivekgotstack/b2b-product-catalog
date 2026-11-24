@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   metadataBase: company.siteUrl ? new URL(company.siteUrl) : undefined,
   title: { default: `${catalogueTitle} | Wholesale Clothing`, template: `%s | ${catalogueTitle}` },
   description: catalogueDescription,
-  robots: company.siteUrl && company.name ? undefined : { index: false, follow: false },
+  robots: { index: false, follow: false },
   openGraph: {
     type: "website",
     siteName: catalogueTitle,

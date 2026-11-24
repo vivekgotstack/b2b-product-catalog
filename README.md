@@ -1,6 +1,6 @@
 # B2B Clothing Catalogue
 
-A static Next.js catalogue for a single apparel brand. It includes ten sample listings and thirty local WebP photos to demonstrate the card slideshow. Brand and contact details start empty.
+A statically generated Next.js catalogue for a single apparel brand. It includes ten sample listings and thirty local WebP photos to demonstrate the card slideshow.
 
 ## Run and build
 
@@ -9,21 +9,27 @@ Use Node.js 20.9 or newer.
 ```sh
 npm ci
 npm run dev
-npm run build
 ```
 
-Upload `out/` to a static host that serves directory index files. Configure `404.html` as the host’s error page. Run a new build after catalogue or contact changes.
+### Deploy on Vercel
+
+Use the Next.js framework preset with the default output directory. Under **Settings → Environment Variables**, add the following values for **Production** and any **Preview** deployments that need access.
+
+| Variable | Value |
+| --- | --- |
+| `CATALOGUE_LOGIN_EMAIL` | The email used as the sign-in ID |
+| `CATALOGUE_PASSWORD` | A unique catalogue password stored as a secret |
+| `CATALOGUE_CONTACT_EMAIL` | The inbox that receives enquiries. Leave blank to hide email actions. |
+
+Deploy again after changing any of these values. Visitors sign in through the browser prompt. The production site stays closed if either login setting is missing.
+
+For local sign-in testing, copy `.env.example` to `.env.local` and fill in the login settings. With both settings blank, `npm run dev` allows local browsing. Run `npm run build` followed by `npm start` to test the protected production build locally.
 
 ## Add your catalogue
 
-- Fill in `src/config/company.ts`. Set the full HTTPS production URL and company name to enable indexing. Leave an unused contact method set to `null`. Use an international phone number and a WhatsApp number with digits only, including the country code.
+- Fill in `src/config/company.ts` for brand, domain, phone and WhatsApp. Set the enquiry inbox through `CATALOGUE_CONTACT_EMAIL`. Use an international phone number and a WhatsApp number with digits only, including the country code.
 - Replace the sample categories and products in `src/data/products.ts`. Use unique lowercase, hyphenated slugs and reference a category slug from each product. Each product needs a name, SKU, description, specification labels and values, and three or four images with descriptive alt text.
 - Store compressed product images under `public/images/products/<product-slug>/` and point each image at `/images/products/<product-slug>/...`. Prefer WebP or AVIF and size images for their display. The first image becomes the catalogue cover. Store your logo and social preview under `public/images/brand/`.
 - Every product gets a static URL at `/products/<product-slug>/`. Email enquiries open the visitor’s mail app with the product and SKU in the subject. Replies and follow-ups stay in your sales inbox.
 - Product cards load alternate images on hover or when the visitor uses the photo controls. The arrows also work with touch and the keyboard.
 
-## Optional password protection
-
-For a private deployment, use your static host’s password protection or serve the export through the included `deploy/Caddyfile`. Run `caddy hash-password` to create a password hash. Set `CATALOGUE_PASSWORD_HASH` on the host and optionally set `CATALOGUE_DOMAIN` and `CATALOGUE_USERNAME`. Keep the hash and password out of the repository. From the project directory, run `caddy run --config deploy/Caddyfile --adapter caddyfile`.
-
-Public search engines need access to crawl the catalogue. Use password protection for private access or previews.

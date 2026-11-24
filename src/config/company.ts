@@ -21,7 +21,7 @@ export const company: Company = {
   socialImagePath: null,
   phone: null,
   whatsappNumber: null,
-  email: null,
+  email: process.env.CATALOGUE_CONTACT_EMAIL?.trim() || null,
 };
 
 export const catalogueTitle = company.name ?? "Apparel Catalogue";
