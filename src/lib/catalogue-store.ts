@@ -1,7 +1,7 @@
 import { get, put } from "@vercel/blob";
 import { unstable_cache } from "next/cache";
 import { cache } from "react";
-import { company } from "@/config/company";
+import { company, environmentContactPhone } from "@/config/company";
 import { categories, products } from "@/data/products";
 import { catalogueSchema, type Catalogue } from "@/lib/catalogue-schema";
 
@@ -38,9 +38,16 @@ const readCachedCatalogue = unstable_cache(
   { tags: [catalogueCacheTag], revalidate: 3600 },
 );
 
-export const readCatalogue = cache(() =>
-  catalogueStorageConnected() ? readCachedCatalogue() : readCatalogueForEditing(),
-);
+export const readCatalogue = cache(async () => {
+  const snapshot = await (catalogueStorageConnected() ? readCachedCatalogue() : readCatalogueForEditing());
+  const phone = snapshot.data.company.phone ?? environmentContactPhone();
+  if (phone === snapshot.data.company.phone) return snapshot;
+
+  return {
+    ...snapshot,
+    data: { ...snapshot.data, company: { ...snapshot.data.company, phone } },
+  };
+});
 
 export async function writeCatalogue(data: Catalogue, revision: string | null) {
   return put(catalogueKey, JSON.stringify(data), {

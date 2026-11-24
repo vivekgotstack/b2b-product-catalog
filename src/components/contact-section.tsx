@@ -4,8 +4,8 @@ import { enquiryEmail, phoneHref, whatsappEnquiry } from "@/lib/contact";
 
 export function ContactSection({ company }: { company: Company }) {
   const methods = [
+    { label: "Call sales", value: company.phone?.display, href: phoneHref(company), icon: Phone, highlight: true },
     { label: "Email sales", value: company.email, href: enquiryEmail(company), icon: Mail },
-    { label: "Call sales", value: company.phone?.display, href: phoneHref(company), icon: Phone },
     { label: "WhatsApp", value: "Start an enquiry", href: whatsappEnquiry(company), icon: MessageCircle, external: true },
   ].filter((method) => method.href);
 
@@ -26,9 +26,9 @@ export function ContactSection({ company }: { company: Company }) {
             <>
               <p>For a bulk quote, share the product name, quantity, sizes and delivery location.</p>
               <ul>
-                {methods.map(({ label, value, href, icon: Icon, external }) => (
+                {methods.map(({ label, value, href, icon: Icon, external, highlight }) => (
                   <li key={label}>
-                    <a href={href ?? undefined} {...(external && { target: "_blank", rel: "noopener noreferrer", "aria-label": `${label} enquiry (opens in a new tab)` })}>
+                    <a className={highlight ? "contact-call" : undefined} href={href ?? undefined} {...(external && { target: "_blank", rel: "noopener noreferrer", "aria-label": `${label} enquiry (opens in a new tab)` })}>
                       <span className="contact-icon"><Icon size={19} aria-hidden="true" /></span>
                       <span><strong>{label}</strong><span>{value}</span></span>
                     </a>

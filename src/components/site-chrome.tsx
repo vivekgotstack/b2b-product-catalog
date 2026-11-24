@@ -9,12 +9,18 @@ import { enquiryEmail, phoneHref, whatsappEnquiry } from "@/lib/contact";
 export async function Header() {
   const { data: { company } } = await readCatalogue();
   const email = enquiryEmail(company);
+  const phone = phoneHref(company);
 
   return (
     <header>
-      {(company.location || email) && (
+      {(phone || company.location || email) && (
         <div className="utility-bar">
           <div className="container-shell utility-inner">
+            {phone && (
+              <a className="utility-call" href={phone}>
+                <Phone size={16} aria-hidden="true" />Call sales <strong>{company.phone?.display}</strong>
+              </a>
+            )}
             {company.location && <span><MapPin size={15} aria-hidden="true" />{company.location}</span>}
             {email && <a href={email}><Mail size={15} aria-hidden="true" />{company.email}</a>}
           </div>

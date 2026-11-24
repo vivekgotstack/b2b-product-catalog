@@ -2,6 +2,7 @@ import { z } from "zod";
 
 const slug = z.string().trim().min(1).max(100).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use lowercase letters, numbers and hyphens for the URL.");
 const label = z.string().trim().min(1).max(160);
+export const internationalPhonePattern = /^\+[1-9]\d{6,14}$/;
 const imagePath = z.string().regex(/^\/(?:images\/(?:products|brand)\/[\w/-]+\.(?:avif|jpe?g|png|webp|svg)|media\/[a-f0-9-]{36}\.(?:webp|jpg|png)\/?)$/i, "Use an existing or uploaded image.");
 const optionalText = z.string().trim().min(1).max(4000).nullable();
 
@@ -26,7 +27,7 @@ const company = z.object({
   socialImagePath: imagePath.nullable(),
   phone: z.object({
     display: label,
-    international: z.string().trim().regex(/^\+[1-9]\d{6,14}$/, "Enter the phone number with its international country code."),
+    international: z.string().trim().regex(internationalPhonePattern, "Enter the phone number with its international country code."),
   }).nullable(),
   whatsappNumber: z.string().trim().regex(/^[1-9]\d{6,14}$/, "Enter the WhatsApp number and country code using digits.").nullable(),
   email: z.email().nullable(),

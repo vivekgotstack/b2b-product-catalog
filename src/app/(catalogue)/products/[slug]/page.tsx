@@ -86,8 +86,8 @@ export default async function ProductPage({ params }: Props) {
             <h2 id="product-contact-title">Request a bulk quote</h2>
             <p>Include your quantity, sizes and delivery location.</p>
             <div className="product-contact-actions">
-              {email && <Button asChild><a href={email}><Mail size={17} aria-hidden="true" />Email enquiry</a></Button>}
-              {phone && <Button asChild variant={email ? "outline" : "default"}><a href={phone}><Phone size={17} aria-hidden="true" />Call sales</a></Button>}
+              {phone && <Button asChild><a href={phone}><Phone size={17} aria-hidden="true" />Call {company.phone?.display}</a></Button>}
+              {email && <Button asChild variant={phone ? "outline" : "default"}><a href={email}><Mail size={17} aria-hidden="true" />Email enquiry</a></Button>}
               {whatsapp && <Button asChild variant="whatsapp"><a href={whatsapp} target="_blank" rel="noopener noreferrer"><MessageCircle size={17} aria-hidden="true" />WhatsApp<span className="sr-only"> (opens in a new tab)</span></a></Button>}
               {!email && !phone && !whatsapp && <EnquiryButton company={company} product={product} label="Contact sales" />}
             </div>

@@ -21,6 +21,7 @@ Use the Next.js framework preset with the default output directory. Under **Sett
 | `CATALOGUE_PASSWORD` | A unique catalogue password stored as a secret |
 | `CATALOGUE_SESSION_SECRET` | A separate random signing key, at least 32 bytes, stored as a secret |
 | `CATALOGUE_CONTACT_EMAIL` | The inbox that receives enquiries. Leave blank to hide email actions. |
+| `CATALOGUE_CONTACT_PHONE` | Public sales number with `+` and country code, without spaces or punctuation. Used when Store details has no saved phone number. |
 | `BLOB_READ_WRITE_TOKEN` | The private Vercel Blob store token if the project is not using its managed Blob connection |
 
 Generate the signing key once and save it with the other login settings.

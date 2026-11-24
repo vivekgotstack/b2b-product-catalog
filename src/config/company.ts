@@ -1,4 +1,4 @@
-import type { Company } from "@/lib/catalogue-schema";
+import { internationalPhonePattern, type Company } from "@/lib/catalogue-schema";
 
 export const company: Company = {
   name: "Bulkout",
@@ -15,3 +15,10 @@ export const company: Company = {
 
 export const catalogueDescription =
   "A clothing catalogue for bulk orders, quotations and product enquiries.";
+
+export function environmentContactPhone(): Company["phone"] {
+  const number = process.env.CATALOGUE_CONTACT_PHONE?.trim();
+  return number && internationalPhonePattern.test(number)
+    ? { display: number, international: number }
+    : null;
+}

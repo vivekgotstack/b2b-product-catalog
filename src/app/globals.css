@@ -34,6 +34,10 @@ a { text-underline-offset: 3px; }
 .utility-inner { display: flex; align-items: center; justify-content: space-between; gap: .6rem 1.25rem; min-height: 34px; }
 .utility-inner > * { display: flex; align-items: center; gap: .42rem; }
 .utility-inner a:hover { text-decoration: underline; }
+.utility-inner:has(.utility-call) { flex-wrap: wrap; gap: .4rem 1.25rem; padding-block: .35rem; }
+.utility-call { min-height: 36px; padding: .28rem .7rem; border-radius: 6px; background: #e6efdc; color: #173229; }
+.utility-call strong { font-size: .925rem; white-space: nowrap; }
+.utility-call:focus-visible { outline-color: #d8ebbd; }
 .header-main { background: white; border-bottom: 1px solid var(--color-border); }
 .header-inner { display: flex; align-items: center; gap: clamp(1rem, 4vw, 4rem); min-height: 74px; }
 .wordmark { display: inline-flex; align-items: center; gap: .7rem; color: inherit; }
@@ -202,6 +206,9 @@ a { text-underline-offset: 3px; }
 .contact-icon { display: grid; place-items: center; width: 40px; height: 40px; background: #edf5ed; color: var(--color-primary); border-radius: 8px; flex-shrink: 0; }
 .contact-panel li a strong, .contact-panel li a span span { display: block; overflow-wrap: anywhere; font-size: .875rem; }
 .contact-panel li a span span { color: var(--color-muted-foreground); }
+.contact-panel li a.contact-call { border-color: transparent; background: var(--color-primary); color: white; }
+.contact-panel li a.contact-call:hover { background: var(--color-primary-hover); }
+.contact-panel li a.contact-call span span { color: white; font-size: 1rem; font-weight: 700; }
 
 .site-footer { background: #243c32; color: #f6f9f6; }
 .footer-content { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem 2rem; padding-block: 1.25rem; }
